@@ -15,7 +15,7 @@ export function CrearUsuario() {
     <div className="page">
       <h1>Crear usuario</h1>
       <UserForm
-        onSubmit={handleSubmit}
+        onCreate={handleSubmit}
         onCancel={() => navigate('/')}
       />
     </div>

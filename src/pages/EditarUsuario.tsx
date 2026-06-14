@@ -30,7 +30,7 @@ export function EditarUsuario() {
       <h1>Editar usuario</h1>
       <UserForm
         initial={initial ?? undefined}
-        onSubmit={handleSubmit}
+        onUpdate={handleSubmit}
         onCancel={() => navigate('/')}
         isEdit
       />

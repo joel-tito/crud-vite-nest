@@ -3,12 +3,13 @@ import type { CreateUsuarioPayload, UpdateUsuarioPayload } from '../types/Usuari
 
 interface Props {
   initial?: { nombre: string; email: string };
-  onSubmit: (data: CreateUsuarioPayload | UpdateUsuarioPayload) => Promise<void>;
+  onCreate?: (data: CreateUsuarioPayload) => Promise<void>;
+  onUpdate?: (data: UpdateUsuarioPayload) => Promise<void>;
   onCancel: () => void;
   isEdit?: boolean;
 }
 
-export function UserForm({ initial, onSubmit, onCancel, isEdit }: Props) {
+export function UserForm({ initial, onCreate, onUpdate, onCancel, isEdit }: Props) {
   const [nombre, setNombre] = useState(initial?.nombre ?? '');
   const [email, setEmail] = useState(initial?.email ?? '');
   const [submitting, setSubmitting] = useState(false);
@@ -17,7 +18,11 @@ export function UserForm({ initial, onSubmit, onCancel, isEdit }: Props) {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await onSubmit({ nombre, email });
+      if (isEdit) {
+        await onUpdate?.({ nombre, email });
+      } else {
+        await onCreate?.({ nombre, email });
+      }
     } finally {
       setSubmitting(false);
     }
